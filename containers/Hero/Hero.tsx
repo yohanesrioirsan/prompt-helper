@@ -12,7 +12,7 @@ interface HeroProps {
 export default function Hero({ setStepper }: HeroProps) {
   return (
     <div className="flex flex-col items-center gap-3 w-full">
-      <h1 className="text-[44px] font-bold text-center text-white lg:w-1/2 drop-shadow">
+      <h1 className="text-4xl lg:text-[44px] font-bold text-center text-white lg:w-1/2 drop-shadow mb-3">
         Generate The Prompt Based On Your Imaginary
       </h1>
       <div className="flex items-center gap-3">

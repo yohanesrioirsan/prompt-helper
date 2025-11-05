@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { GlassButton } from "@/components/ui/glassbutton";
 import { GlassTextarea } from "@/components/ui/glasstextarea";
-import axios from "axios";
 
 export default function PromptPrompt() {
   const [textInput, setTextInput] = useState("");
@@ -10,49 +9,33 @@ export default function PromptPrompt() {
   const [error, setError] = useState("");
 
   const handleGenerate = async () => {
-    const promptMessage = `Generate a proper prompt for me. I will give you my sentence, and I need you to phrase and craft it into a well-structured AI prompt. Here are my words: "${textInput}"`;
-
     setIsLoading(true);
     setError("");
     setGeneratedPrompt("");
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+      const response = await fetch("/api/generate-prompt", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ textInput }),
+      });
 
-      const response = await axios.get(
-        `${apiUrl}q=${encodeURIComponent(promptMessage)}&apikey=${apiKey}`,
-      );
+      const data = await response.json();
 
-      console.log("API Response:", response.data);
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to generate prompt");
+      }
 
-      if (response.data && response.data.status && response.data.data) {
-        const message = response.data.data.message;
-        if (message) {
-          setGeneratedPrompt(message);
-        } else {
-          setError("No prompt generated. Please try again.");
-        }
+      if (data.status === "success" && data.data?.message) {
+        setGeneratedPrompt(data.data.message);
       } else {
-        setError("Unexpected response format from API.");
+        setError("No prompt generated. Please try again.");
       }
     } catch (error) {
       console.error("API Error:", error);
-
-      if (error.response) {
-        setError(
-          error.response.data?.message ||
-            `API Error: ${error.response.status} - ${error.response.statusText}`,
-        );
-      } else if (error.request) {
-        setError(
-          "No response from server. Please check your internet connection.",
-        );
-      } else {
-        setError(
-          error.message || "Failed to generate prompt. Please try again.",
-        );
-      }
+      setError(error.message || "Failed to generate prompt. Please try again.");
     } finally {
       setIsLoading(false);
     }

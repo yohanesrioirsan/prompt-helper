@@ -12,7 +12,10 @@ export default function Layout({ children }: { children: ReactNode }) {
           items={[
             { label: "Home", href: "/" },
             { label: "Collection", href: "/collection" },
-            { label: "GitHub", href: "/yohanesrioirsan" },
+            {
+              label: "GitHub",
+              href: "https://github.com/yohanesrioirsan/prompt-helper",
+            },
           ]}
           className="custom-nav"
           activeHref="/"

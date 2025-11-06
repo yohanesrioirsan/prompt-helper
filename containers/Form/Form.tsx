@@ -2,6 +2,7 @@ import { useState } from "react";
 import { GlassButton } from "@/components/ui/glassbutton";
 import { GlassTextarea } from "@/components/ui/glasstextarea";
 import Loading from "@/components/Loading";
+import Link from "next/link";
 
 export default function PromptPrompt() {
   const [textInput, setTextInput] = useState("");
@@ -128,22 +129,35 @@ export default function PromptPrompt() {
           )}
 
           {generatedPrompt && (
-            <div className="p-4 md:p-6 bg-white/10 rounded-lg backdrop-blur border border-white/20 w-full overflow-hidden transition-all duration-500 animate-slide-up-fade">
-              <div className="flex justify-between items-center mb-3 gap-2">
-                <p className="text-white text-sm md:text-base font-semibold">
-                  Generated Prompt:
-                </p>
-                <button
-                  onClick={handleCopy}
-                  className="text-white/70 hover:text-white text-xs md:text-sm px-2 md:px-3 py-1.5 rounded-md hover:bg-white/10 transition-all duration-200 hover:scale-105 active:scale-95 flex-shrink-0"
+            <>
+              <div className="p-4 md:p-6 bg-white/10 rounded-lg backdrop-blur border border-white/20 w-full overflow-hidden transition-all duration-500 animate-slide-up-fade">
+                <div className="flex justify-between items-center mb-3 gap-2">
+                  <p className="text-white text-sm md:text-base font-semibold">
+                    Generated Prompt:
+                  </p>
+                  <button
+                    onClick={handleCopy}
+                    className="text-white/70 hover:text-white text-xs md:text-sm px-2 md:px-3 py-1.5 rounded-md hover:bg-white/10 transition-all duration-200 hover:scale-105 active:scale-95 flex-shrink-0"
+                  >
+                    Copy
+                  </button>
+                </div>
+                <div className="text-white/90 whitespace-pre-wrap text-sm leading-relaxed max-h-96 overflow-y-auto overflow-x-hidden pr-2 custom-scrollbar break-words">
+                  {generatedPrompt}
+                </div>
+              </div>
+              <div className="w-full flex justify-center mt-3">
+                <Link
+                  href="https://sociabuzz.com/yohanesrioirsan/tribe"
+                  target="_blank"
                 >
-                  Copy
-                </button>
+                  <div className="text-white border border-glass-border bg-glass-background px-6 py-2 w-fit rounded-full text-xs backdrop-blur-md">
+                    Like The Project? Keep it <b>alive</b> with your{" "}
+                    <b>support</b>!
+                  </div>
+                </Link>
               </div>
-              <div className="text-white/90 whitespace-pre-wrap text-sm leading-relaxed max-h-96 overflow-y-auto overflow-x-hidden pr-2 custom-scrollbar break-words">
-                {generatedPrompt}
-              </div>
-            </div>
+            </>
           )}
         </div>
       </div>

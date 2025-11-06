@@ -15,7 +15,7 @@ export default function Hero({ setStepper }: HeroProps) {
   return (
     <div className="flex flex-col items-center gap-3 w-full">
       <Link href="https://sociabuzz.com/yohanesrioirsan/tribe" target="_blank">
-        <div className="text-white border border-glass-border bg-glass-background px-6 py-2 w-fit rounded-full text-xs backdrop-blur-md flex  items-center">
+        <div className="text-white border border-glass-border bg-glass-background px-6 py-2 w-fit rounded-full text-[11px] md:text-xs lg:text-xs backdrop-blur-md flex items-center justify-center">
           <Coins className="mr-2" size={16} />
           <span>
             Like The Project? Keep it <b>alive</b> with your <b>support</b>!

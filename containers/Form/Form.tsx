@@ -3,6 +3,7 @@ import { GlassButton } from "@/components/ui/glassbutton";
 import { GlassTextarea } from "@/components/ui/glasstextarea";
 import Loading from "@/components/Loading";
 import Link from "next/link";
+import { Coins } from "lucide-react";
 
 export default function PromptPrompt() {
   const [textInput, setTextInput] = useState("");
@@ -151,9 +152,12 @@ export default function PromptPrompt() {
                   href="https://sociabuzz.com/yohanesrioirsan/tribe"
                   target="_blank"
                 >
-                  <div className="text-white border border-glass-border bg-glass-background px-6 py-2 w-fit rounded-full text-xs backdrop-blur-md">
-                    Like The Project? Keep it <b>alive</b> with your{" "}
-                    <b>support</b>!
+                  <div className="text-white border border-glass-border bg-glass-background px-6 py-2 w-fit rounded-full text-[11px] md:text-xs lg:text-xs backdrop-blur-md flex items-center justify-center">
+                    <Coins className="mr-2" size={16} />
+                    <span>
+                      Like The Project? Keep it <b>alive</b> with your{" "}
+                      <b>support</b>!
+                    </span>
                   </div>
                 </Link>
               </div>

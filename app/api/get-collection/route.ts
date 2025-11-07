@@ -30,10 +30,10 @@ export async function GET(request: NextRequest) {
     data: {
       result: data,
       pagination: {
-        page,
-        pageSize,
+        current_page: page,
+        per_page: pageSize,
         total_data: count,
-        totalPages,
+        total_pages: totalPages,
       },
     },
   });

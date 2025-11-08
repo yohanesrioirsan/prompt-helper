@@ -5,6 +5,8 @@ import { Copy, CopyCheck, Images } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import Loading from "@/components/Loading";
+import CustomModal from "@/components/CustomModal";
+import CollectionModal from "./CollectionModal";
 
 interface CollectionItem {
   id: number;
@@ -18,6 +20,7 @@ export default function Collection() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [collectionData, setCollectionData] = useState<CollectionItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const copyToClipboard = async (text: string, id: string): Promise<void> => {
     try {
@@ -53,7 +56,10 @@ export default function Collection() {
           Generated Prompt Collection
         </h1>
 
-        <div className="text-white border border-glass-border bg-glass-background px-6 py-2 w-fit rounded-full text-[11px] md:text-xs lg:text-xs backdrop-blur-md flex items-center justify-center">
+        <div
+          className="text-white border border-glass-border bg-glass-background px-6 py-2 w-fit rounded-full text-[11px] md:text-xs lg:text-xs backdrop-blur-md flex items-center justify-center cursor-pointer"
+          onClick={() => setOpenModal(true)}
+        >
           <Images className="mr-2" size={16} />
           <span>
             <b>Showcase</b> your prompt here.
@@ -119,6 +125,17 @@ export default function Collection() {
             ))}
         </div>
       </div>
+
+      {openModal && (
+        <CustomModal
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          title="Showcase Your Prompt"
+          description="Your prompt will show up once it’s approved. Go ahead and send your request!"
+        >
+          <CollectionModal />
+        </CustomModal>
+      )}
     </Layout>
   );
 }

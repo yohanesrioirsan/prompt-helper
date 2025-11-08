@@ -168,7 +168,7 @@ export default function PromptPrompt() {
 
       {isLoading && (
         <div className="transition-all duration-500 ease-in-out">
-          <Loading />
+          <Loading text="Generating Your Prompt" />
         </div>
       )}
     </div>

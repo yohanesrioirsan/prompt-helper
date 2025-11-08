@@ -1,6 +1,10 @@
 import Image from "next/image";
 
-export default function Loading() {
+interface LoadingText {
+  text: string;
+}
+
+export default function Loading({ text }: LoadingText) {
   return (
     <div className="w-full flex justify-center flex-col items-center animate-fade-in">
       <div className="relative">
@@ -26,7 +30,7 @@ export default function Loading() {
       </div>
 
       <div className="mt-6 flex items-center gap-3 animate-slide-up">
-        <h1 className="text-white text-xl font-medium">Generating Prompt</h1>
+        <h1 className="text-white text-xl font-medium">{text}</h1>
       </div>
       <div className="flex gap-1 mt-6">
         <span

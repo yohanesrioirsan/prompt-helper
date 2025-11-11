@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { sendCollectionRequest } from "./request";
-import { useState } from "react";
+import { sendCollectionRequest, type ResponseData } from "./request";
+import React, { useState } from "react";
 
 export default function CollectionModal() {
   const [formData, setFormData] = useState({
@@ -12,10 +12,12 @@ export default function CollectionModal() {
     result: "",
     ai_model: "",
   });
-  const [responseData, setResponseData] = useState(false);
+  const [responseData, setResponseData] = useState<ResponseData>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -23,10 +25,9 @@ export default function CollectionModal() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     try {
       await sendCollectionRequest({
         payload: formData,
@@ -89,22 +90,16 @@ export default function CollectionModal() {
         <Button type="submit" variant="primary" disabled={isSubmitting}>
           {isSubmitting ? "Sending..." : "Send"}
         </Button>
-
-        {responseData &&
-          responseData?.status == 429 &&
-          responseData?.message && (
-            <span className="text-red-600 font-semibold text-center text-sm">
-              {responseData?.message}
-            </span>
-          )}
-
-        {responseData &&
-          responseData?.status == 201 &&
-          responseData?.message && (
-            <span className="text-green-500 font-semibold text-center text-sm">
-              {responseData?.message}
-            </span>
-          )}
+        {responseData?.status === 429 && responseData.message && (
+          <span className="text-red-600 font-semibold text-center text-sm">
+            {responseData.message}
+          </span>
+        )}
+        {responseData?.status === 201 && responseData.message && (
+          <span className="text-green-500 font-semibold text-center text-sm">
+            {responseData.message}
+          </span>
+        )}
       </div>
     </form>
   );

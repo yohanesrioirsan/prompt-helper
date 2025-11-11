@@ -1,9 +1,21 @@
 import axios from "axios";
 import React from "react";
 
+type ResponseData = {
+  status: number;
+  message: string;
+} | null;
+
+type FormData = {
+  plain_prompt: string;
+  generated_prompt: string;
+  result: string;
+  ai_model: string;
+};
+
 type DataPayload = {
-  payload: object;
-  setResponseData: React.Dispatch<React.SetStateAction<boolean>>;
+  payload: FormData;
+  setResponseData: React.Dispatch<React.SetStateAction<ResponseData>>;
 };
 
 const sendCollectionRequest = async ({
@@ -11,12 +23,19 @@ const sendCollectionRequest = async ({
   setResponseData,
 }: DataPayload) => {
   try {
-    const response = await axios.post("/api/send-request", payload);
-
+    const response = await axios.post<ResponseData>(
+      "/api/send-request",
+      payload,
+    );
     setResponseData(response.data);
   } catch (error) {
-    console.log(error);
+    if (axios.isAxiosError(error) && error.response) {
+      setResponseData(error.response.data);
+    } else {
+      console.error(error);
+    }
   }
 };
 
 export { sendCollectionRequest };
+export type { ResponseData, FormData };

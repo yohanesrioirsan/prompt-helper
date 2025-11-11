@@ -38,7 +38,11 @@ export default function PromptPrompt() {
       }
     } catch (error) {
       console.error("API Error:", error);
-      setError(error.message || "Failed to generate prompt. Please try again.");
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to generate prompt. Please try again.";
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }

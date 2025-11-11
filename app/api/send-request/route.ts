@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
       const waitTime = Math.ceil((resetTime - Date.now()) / 1000 / 60);
 
       return NextResponse.json({
-        message: `Rate Limit exceeded. Please Try Again in ${waitTime} minutes`,
+        message: `⌛ Rate Limit exceeded. Please Try Again in ${waitTime} minutes`,
         success: false,
         status: 429,
       });
@@ -73,7 +73,8 @@ export async function POST(request: NextRequest) {
       }
 
       return NextResponse.json({
-        message: "Your request has been sent.",
+        message:
+          "🛫 Your request has been sent. Your request will appear on this page once it’s approved.",
         success: true,
         status: 201,
         data: body,
